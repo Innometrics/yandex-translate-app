@@ -1,0 +1,26 @@
+{
+    "API_KEY":{
+        "title":"API key",
+        "description": "",
+        "type":"string"
+    },
+    "TO_LANG":{
+        "title":"Language-destination",
+        "description": "Language which text must be translated to",
+        "type":"string",
+        "enum": ["ar","az","be","bg","bs","ca","cs","da","de","el","en","es","et","fi","fr","he","hr","hu","hy","id","is","it","ja","ka","ko","lt","lv","mk","ms","mt","nl","no","pl","pt","ro","ru","sk","sl","sq","sr","sv","th","tr","uk","vi","zh"],
+        "options":{
+            "enum_titles": ["Arabic","Azerbaijani","Belarusian","Bulgarian","Bosnian","Catalan","Czech","Danish","German","Greek","English","Spanish","Estonian","Finnish","French","Hebrew","Croatian","Hungarian","Armenian","Indonesian","Icelandic","Italian","Japanese","Georgian","Korean","Lithuanian","Latvian","Macedonian","Malay","Maltese","Dutch","Norwegian","Polish","Portuguese","Romanian","Russian","Slovak","Slovenian","Albanian","Serbian","Swedish","Thai","Turkish","Ukrainian","Vietnamese","Chinese"]
+        }
+    },
+    "EVENT_DATA_NAME":{
+        "title":"Name of event data",
+        "description": "Name of event data which contains text to translate",
+        "type":"string"
+    },
+    "PROFILE_ATTR_NAME":{
+        "title":"Name of profile attribute",
+        "description": "Name of profile attribute where translated text should be saved",
+        "type":"string"
+    }
+}
