@@ -102,6 +102,12 @@ $app->post('/', function(Request $request) use($app, $inno) {
 
     $section = $data['session']['section'];
     $inno->setVar('section', $section);
+    
+    if ($app['debug']) {
+        error_log('Profile ID: ' . $profile);
+        error_log('Section: ' . $section);
+        error_log('Settings: ' . json_encode($settings));
+    }
 
     // Try to get phone number from event data
     $eventData = $data['data'];
@@ -117,6 +123,9 @@ $app->post('/', function(Request $request) use($app, $inno) {
 
     // Translate
     $res = translate($text, $settings);
+    if ($app['debug']) {
+        error_log('From yandex-translator: ' . json_encode($res));
+    }
     if ($res['success']) {
         $translatedText = implode(',', $res['content']['text']);
         
@@ -130,14 +139,29 @@ $app->post('/', function(Request $request) use($app, $inno) {
                 'error' => $message
             ));
         }
+
+        $collectApp = $inno->getVars()->appName;
+        $attrs = array_filter($attributes, function ($attribute) use ($collectApp, $section) {
+            return $attribute['collectApp'] === $collectApp && $attribute['section'] === $section;
+        });
         
         // Save translated text to profile attribute
         $attributeName = $settings['PROFILE_ATTR_NAME'];
-        $attributes[$attributeName] = $translatedText;
+        
+        if ($app['debug']) {
+            error_log('Set to attribute: ' . $attributeName);
+        }        
+        
+        $newAttrs = array();
+        if (count($attrs) === 1) {
+            $newAttrs = $attributes[array_keys($attrs)[0]]['data'];
+        }
+        
+        $newAttrs[$attributeName] = $translatedText;
         
         // Set attributes
         try {
-            $attributes = $inno->setAttributes($attributes);
+            $inno->setAttributes($newAttrs);
         } catch (\ErrorException $error) {
             $message = $error->getMessage();
             error_log($message);
