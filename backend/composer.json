@@ -1,6 +1,6 @@
 {
     "require": {
         "silex/silex": "~1.1",
-        "innometrics/helper": "*"
+        "innometrics/helper": "0.0.4"
     }
 }
